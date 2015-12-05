@@ -19,6 +19,12 @@ match.getWorld().on('use', function(event) {
       match.broadcast(count + "");
       count--;
       if (count < 0) {
+        // var players = match.getPlayers();
+        // for (var i = 0; i < players.length; i++) {
+          // if (!(players[i].getTeam().getName() == player.getTeam().getName || players[i].getTeam == null)) {
+            // players[i].damage(100);
+          // };
+        // }
         var x = getRandom(-50, 50);
         var z = getRandom(-50, 50);
         match.getWorld().strikeLightning(x, 0, z, false);
@@ -27,6 +33,8 @@ match.getWorld().on('use', function(event) {
       }
     }, 1000);
   }
+
+
 
 });
 
