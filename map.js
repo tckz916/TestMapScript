@@ -2,6 +2,7 @@ var isStart = false;
 
 match.getWorld().on('use', function(event) {
   var player = event.getPlayer();
+  var itemstack = event.getItemStack();
   if (itemstack.getType() == 'STICK') {
     console.log(player.getName() + "is not a STICK.");
     return;
@@ -10,9 +11,7 @@ match.getWorld().on('use', function(event) {
     console.log(player.getName() + "is not in the Team.");
     return;
   }
-
-  var itemstack = event.getItemStack();
-
+  
   if (!checkBoolean(isStart)) {
     isStart = true;
     var count = 10;
