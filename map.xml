@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map proto="1.3.3">
+
+    <!--
+    Ver-1.0.0 初版
+    -->
+
+    <script src="map.js"/>
+
+    <name>testmap</name>
+    <version>1.0.0</version>
+    <objective>敵本拠地横にある羊毛を奪取し、台座に設置 / Take the enemy's wool located to either side of the enemy's base and place it in your victory</objective>
+
+    <!-- 関係者 -->
+    <authors>
+
+        <author contribution="XMLCoding">hayate916</author>
+
+    </authors>
+
+    <!-- チーム -->
+    <teams>
+
+        <team color="red" max="30">Red Team</team>
+        <team color="blue" max="30">Blue Team</team>
+
+    </teams>
+
+    <!-- キット -->
+    <kits>
+
+        <kit name="spawn">
+            <item slot="0" enchantment="damage_all:1" bind="true">wood sword</item>
+            <item slot="1" bind="true">bow</item>
+            <item slot="2" enchantment="dig_speed:3" bind="true">iron axe</item>
+            <item slot="3" enchantment="dig_speed:3" bind="true">iron pickaxe</item>
+            <item slot="4" amount="1" bind="true">golden_apple</item>
+            <item slot="5" amount="16" bind="true">cooked beef</item>
+            <item slot="6" amount="32">log</item>
+            <item slot="7" enchantment="dig_speed:3" bind="true">shears</item>
+            <item slot="9" amount="16" locked="true">arrow</item>
+            <potion duration="6" amplifier="100">damage_resistance</potion>
+            <potion duration="6" amplifier="100">regeneration</potion>
+        </kit>
+
+        <kit name="red" parents="spawn">
+            <helmet color="993333" bind="true">leather helmet</helmet>
+            <chestplate color="993333" bind="true">leather chestplate</chestplate>
+            <leggings color="993333" bind="true">leather leggings</leggings>
+            <boots color="993333" bind="true">leather boots</boots>
+        </kit>
+
+        <kit name="blue" parents="spawn">
+            <helmet color="334CB2" bind="true">leather helmet</helmet>
+            <chestplate color="334CB2" bind="true">leather chestplate</chestplate>
+            <leggings color="334CB2" bind="true">leather leggings</leggings>
+            <boots color="334CB2" bind="true">leather boots</boots>
+        </kit>
+
+    </kits>
+
+    <!-- アイテム関連 -->
+
+    <itemremove>
+
+        <item>wool</item>
+
+    </itemremove>
+
+    <toolrepair>
+
+        <tool>iron sword</tool>
+        <tool>iron axe</tool>
+        <tool>iron pickaxe</tool>
+        <tool>bow</tool>
+        <tool>shears</tool>
+
+    </toolrepair>
+
+    <!--スポーン-->
+
+    <spawns>
+        <spawn team="red" yaw="-90" kit="red">
+            <cuboid min="-45.5,6,0.5" max="-45.5,6,0.5"/>
+        </spawn>
+
+        <spawn team="blue" yaw="90" kit="blue">
+            <cuboid min="46.5,6,0.5" max="46.5,6,0.5"/>
+        </spawn>
+
+        <default yaw="-90">
+            <cuboid min="0.5,31,0.5" max="0.5,31,0.5"/>
+        </default>
+
+    </spawns>
+
+    <!-- フィルター -->
+
+    <filters>
+
+        <filter name="only-red">
+            <team>red</team>
+        </filter>
+
+        <filter name="only-blue">
+            <team>blue</team>
+        </filter>
+
+        <filter name="glass-break">
+            <block>glass</block>
+        </filter>
+
+        <filter name="test-break">
+            <any>
+                <all>
+                    <block>stained clay</block>
+                </all>
+                <all>
+                    <block>redstone wire</block>
+                </all>
+            </any>
+        </filter>
+
+        <filter name="void">
+            <not>
+                <void/>
+            </not>
+        </filter>
+
+    </filters>
+
+    <!-- リージョン -->
+
+    <regions>
+        <rectangle name="red-base" min="-50,7" max="-39,-7"></rectangle>
+        <rectangle name="blue-base" min="50,-7" max="39,7"></rectangle>
+        <rectangle name="blue-wool-room" min="-28,26" max="-33,36"></rectangle>
+        <rectangle name="light_blue-wool-room" min="-28,-25" max="-33,-35"></rectangle>
+        <rectangle name="red-wool-room" min="29,-26" max="33,-35"></rectangle>
+        <rectangle name="pink-wool-room" min="29,26" max="33,35"></rectangle>
+        <cuboid name="test" min="-4,6,3" max="4,6,-3"/>
+
+
+        <union name="base">
+            <region name="red-base"/>
+            <region name="blue-base"/>
+        </union>
+
+        <union name="wool-room">
+            <region name="red-wool-room"/>
+            <region name="pink-wool-room"/>
+            <region name="blue-wool-room"/>
+            <region name="light_blue-wool-room"/>
+        </union>
+
+        <union name="red-wool-rooms">
+            <region name="blue-wool-room"/>
+            <region name="light_blue-wool-room"/>
+        </union>
+
+        <union name="blue-wool-rooms">
+            <region name="red-wool-room"/>
+            <region name="pink-wool-room"/>
+        </union>
+
+        <apply velocity="0,1.5,0">
+            <region name="test"/>
+        </apply>
+
+        <apply block="deny-blocks" message="You can't modify the base.">
+            <region name="base"/>
+        </apply>
+
+        <apply block-break="glass-break" block-place="deny-place" message="You can't modify the wool room.">
+            <region name="wool-room"/>
+        </apply>
+
+        <apply block="void" message="It is out of range, you can not put block here.">
+            <negative>
+                <cuboid min="0,0,0" max="0,0,0"/>
+            </negative>
+        </apply>
+
+        <apply enter="only-red" message="You can't enter to the enemy's base.">
+            <region name="red-base"/>
+        </apply>
+
+        <apply enter="only-blue" message="You can't enter to the enemy's base.">
+            <region name="blue-base"/>
+        </apply>
+
+        <apply enter="only-blue" message="You can't enter to the your team's wool room.">
+            <region name="red-wool-rooms"/>
+        </apply>
+
+        <apply enter="only-red" message="You can't enter to the your team's wool room.">
+            <region name="blue-wool-rooms"/>
+        </apply>
+
+    </regions>
+
+    <!-- 羊毛台座 -->
+
+    <wools>
+
+        <wool team="red" color="pink">
+            <block location="-38,7,1"/>
+        </wool>
+
+        <wool team="red" color="red">
+            <block location="-38,7,-1"/>
+        </wool>
+
+        <wool team="blue" color="light blue">
+            <block location="38,7,-1"/>
+        </wool>
+
+        <wool team="blue" color="blue">
+            <block location="38,7,1"/>
+        </wool>
+
+    </wools>
+
+    <!--その他 -->
+
+    <killreward>
+        <kit>
+            <potion duration="5" amplifier="1" ambient="true">REGENERATION</potion>
+        </kit>
+    </killreward>
+
+    <autorespawn/>
+
+    <maxbuildheight>30</maxbuildheight>
+
+    <disabledamage>
+        <damage>fall</damage>
+    </disabledamage>
+
+    <!-- チュートリアル -->
+
+    <include src="tutorial.xml"/>
+    <tutorial>
+    </tutorial>
+
+    <locales>
+        <locale lang="ja_JP">
+            <string name="You can't modify the base." value="拠点は編集出来ません。"/>
+            <string name="You can't modify the wool room." value="羊毛部屋は編集出来ません。"/>
+            <string name="You can't enter to the enemy's base." value="敵チームの拠点には侵入出来ません。"/>
+            <string name="You can't enter to the your team's wool room." value="自チームの羊毛部屋には侵入出来ません。"/>
+            <string name="It is out of range, you can not put block here." value="範囲外です、ここにブロックを置けません。"/>
+        </locale>
+    </locales>
+
+</map>
