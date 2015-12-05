@@ -3,7 +3,7 @@ var isStart = false;
 match.getWorld().on('use', function(event) {
   var player = event.getPlayer();
   var itemstack = event.getItemStack();
-  if (itemstack.getType() == 'STICK') {
+  if (itemstack.getType() != 'STICK') {
     console.log(player.getName() + "is not a STICK.");
     return;
   }
@@ -11,8 +11,8 @@ match.getWorld().on('use', function(event) {
     console.log(player.getName() + "is not in the Team.");
     return;
   }
-  
-  if (!checkBoolean(isStart)) {
+
+  if (!isStart) {
     isStart = true;
     var count = 10;
     var timer = setInterval(function() {
@@ -29,14 +29,6 @@ match.getWorld().on('use', function(event) {
   }
 
 });
-
-function checkBoolean(val) {
-  if (val) {
-    return true;
-  } else {
-    return false;
-  }
-}
 
 function getRandom(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
