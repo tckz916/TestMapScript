@@ -27,20 +27,20 @@ match.getWorld().on('use', function(event) {
     var timer = setInterval(
       function() {
         if (count < 1) {
-          match.broadcast(getPrefix() + "`c`lBOOM!");
+          match.broadcast(getPrefix(player) + "`c`lBOOM!");
           var players = match.getPlayers();
           for (var i = 0; i < players.length; i++) {
             players[i].playSound('EXPLODE', 1, 1);
             if (!(players[i].getTeam().getName() == player.getTeam().getName() || players[i].getTeam == null)) {
               players[i].kill(player);
-              match.broadcast(getPrefix() + getTeamColorCode(players[i]) + players[i].getName() + " `ewas nuked by " + getTeamColorCode(player) + player.getName());
+              match.broadcast(getPrefix(player) + getTeamColorCode(players[i]) + players[i].getName() + " `ewas nuked by " + getTeamColorCode(player) + player.getName());
             };
           }
           clearInterval(timer);
           player.removeItem(itemstack, 1);
           playerMap[player.getUUID()] = false;
         } else {
-          match.broadcast(getPrefix() + " `rImpact in " + getTeamColorCode(player) + count);
+          match.broadcast(getPrefix(player) + " `rImpact in " + getTeamColorCode(player) + count);
         }
         count--;
       }, 1000);
@@ -51,6 +51,6 @@ function getTeamColorCode(player) {
   return player.getTeam().getColorCode();
 }
 
-function getPrefix() {
+function getPrefix(player) {
   return "`7[" + getTeamColorCode(player) + player.getName() + "'s Nuke`7]: ";
 }
