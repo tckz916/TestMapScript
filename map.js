@@ -10,6 +10,7 @@ match.on('end', function() {
 match.getWorld().on('use', function(event) {
   var player = event.getPlayer();
   var itemstack = event.getItemStack();
+  var uuid = player.getUUID();
   var playerMap = new Object();
   if (!isGamestart) {
     return;
@@ -21,13 +22,15 @@ match.getWorld().on('use', function(event) {
     return;
   }
 
-  if (!playerMap[player.getUUID()]) {
-    playerMap[player.getUUID()] = true;
+  player.sendMessage(playerMap);
+
+  if (!playerMap.uuid) {
+    playerMap.uuid = true;
     var count = 5;
     var timer = setInterval(
       function() {
         if (count < 1) {
-          match.broadcast(getPrefix(player) + "`c`lBOOM!");
+          match.broadcast(getPrefix(player) + getTeamColorCode(player) + "`lBOOM!");
           var players = match.getPlayers();
           for (var i = 0; i < players.length; i++) {
             players[i].playSound('EXPLODE', 1, 1);
@@ -38,9 +41,9 @@ match.getWorld().on('use', function(event) {
           }
           clearInterval(timer);
           player.removeItem(itemstack, 1);
-          playerMap[player.getUUID()] = false;
+          playerMap.uuid = false;
         } else {
-          match.broadcast(getPrefix(player) + " `rImpact in " + getTeamColorCode(player) + count);
+          match.broadcast(getPrefix(player) + "`rImpact in " + getTeamColorCode(player) + count);
         }
         count--;
       }, 1000);
