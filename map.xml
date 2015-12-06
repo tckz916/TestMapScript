@@ -65,6 +65,16 @@
     <itemremove>
 
         <item>wool</item>
+        <item>wood sword</item>
+        <item>bow</item>
+        <item>iron axe</item>
+        <item>iron pickaxe</item>
+        <item>golden_apple</item>
+        <item>cooked beef</item>
+        <item>log</item>
+        <item>shears</item>
+        <item>blaze_powder</item>
+        <item>arrow</item>
 
     </itemremove>
 
