@@ -7,22 +7,22 @@
 
     <script src="map.js"/>
 
-    <name>testmap</name>
+    <name>Test Map Script</name>
     <version>1.0.0</version>
     <objective>敵本拠地横にある羊毛を奪取し、台座に設置 / Take the enemy's wool located to either side of the enemy's base and place it in your victory</objective>
 
     <!-- 関係者 -->
     <authors>
 
-        <author contribution="XMLCoding">hayate916</author>
+        <author contribution="XMLCoding">hayatarou_</author>
 
     </authors>
 
     <!-- チーム -->
     <teams>
 
-        <team color="red" max="30">Red Team</team>
-        <team color="blue" max="30">Blue Team</team>
+        <team color="red" max="8">Red Team</team>
+        <team color="blue" max="8">Blue Team</team>
 
     </teams>
 
@@ -38,6 +38,7 @@
             <item slot="5" amount="16" bind="true">cooked beef</item>
             <item slot="6" amount="32">log</item>
             <item slot="7" enchantment="dig_speed:3" bind="true">shears</item>
+            <item slot="8" amount="64">blaze_powder</item>
             <item slot="9" amount="16" locked="true">arrow</item>
             <potion duration="6" amplifier="100">damage_resistance</potion>
             <potion duration="6" amplifier="100">regeneration</potion>
