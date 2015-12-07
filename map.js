@@ -10,12 +10,13 @@ match.on('end', function() {
   isGamestart = false;
   var players = match.getPlayers();
   for (var i = 0; i < players.length; i++) {
-    if (!(players[i].getTeam == null)) {
+    if (!(players[i].getTeam() == null)) {
       var playerKills = new Object();
       var player = players[i];
+      var kills = player.getKills();
       playerArray[i] = {
         name: player.getName(),
-        kills: player.getKills()
+        kills: kills
       };
     };
   }
@@ -48,7 +49,7 @@ match.getWorld().on('use', function(event) {
           match.broadcast(getPrefix(player) + getTeamColorCode(player) + "`lBOOM!");
           for (var i = 0; i < players.length; i++) {
             players[i].playSound('EXPLODE', 1, 1);
-            if (!(players[i].getTeam().getName() == player.getTeam().getName() || players[i].getTeam == null)) {
+            if (!(players[i].getTeam().getName() == player.getTeam().getName() || players[i].getTeam() == null)) {
               players[i].kill(player);
               match.broadcast(getPrefix(player) + getTeamColorCode(players[i]) + players[i].getName() + " `ewas nuked by " + getTeamColorCode(player) + player.getName());
             };
