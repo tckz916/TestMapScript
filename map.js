@@ -25,21 +25,6 @@ match.on('end', function() {
   }
 });
 
-function sort(ary, key, order) {
-  var reverse = 1;
-  if (order && order.toLowerCase() == "desc")
-    reverse = -1;
-  ary.sort(
-    function(a, b) {
-      if (a[key] < b[key])
-        return -1 * reverse;
-      else if (a[key] == b[key])
-        return 0;
-      else
-        return 1 * reverse;
-    });
-}
-
 match.getWorld().on('use', function(event) {
   var player = event.getPlayer();
   var itemstack = event.getItemStack();
@@ -88,4 +73,19 @@ function getTeamColorCode(player) {
 
 function getPrefix(player) {
   return "`7[" + getTeamColorCode(player) + player.getName() + "'s Nuke`7]: ";
+}
+
+function sort(ary, key, order) {
+  var reverse = 1;
+  if (order && order.toLowerCase() == "desc")
+    reverse = -1;
+  ary.sort(
+    function(a, b) {
+      if (a[key] < b[key])
+        return -1 * reverse;
+      else if (a[key] == b[key])
+        return 0;
+      else
+        return 1 * reverse;
+    });
 }
