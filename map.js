@@ -1,12 +1,44 @@
 var isGamestart = false;
 var playerMap = new Object();
+var playerArray = new Array();
 match.on('start', function() {
   isGamestart = true;
 });
 
+
 match.on('end', function() {
   isGamestart = false;
+  var players = match.getPlayers();
+  for (var i = 0; i < players.length; i++) {
+    if (!(players[i].getTeam == null)) {
+      var playerKills = new Object();
+      var player = players[i];
+      playerArray[i] = {
+        name: player.getName(),
+        kills: player.getKills()
+      };
+    };
+  }
+  sort(playerArray, "kills", "DESC");
+  for (var i = 0; i < 2; i++) {
+    match.broadcast(playerArray[i]["name"] + playerArray[i]["kills"]);
+  }
 });
+
+function sort(ary, key, order) {
+  var reverse = 1;
+  if (order && order.toLowerCase() == "desc")
+    reverse = -1;
+  ary.sort(
+    function(a, b) {
+      if (a[key] < b[key])
+        return -1 * reverse;
+      else if (a[key] == b[key])
+        return 0;
+      else
+        return 1 * reverse;
+    });
+}
 
 match.getWorld().on('use', function(event) {
   var player = event.getPlayer();
